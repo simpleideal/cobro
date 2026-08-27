@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos de Transferencia - Constructora LP</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --accent-hover: #0284c7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid #334155;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 1.25rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .field-group {
+            margin-bottom: 16px;
+            background: #0f172a;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .field-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .value {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .btn-copy {
+            background-color: var(--accent);
+            color: #0f172a;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy.copied {
+            background-color: var(--success);
+            color: #fff;
+        }
+
+        .vcard-btn {
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .vcard-btn:active {
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50px;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="header">
+            <h1>Constructora LP SpA</h1>
+            <p>Datos oficiales de transferencia</p>
+        </div>
+
+        <div class="field-group">
+            <div class="field-info">
+                <span class="label">Razon Social</span>
+                <span class="value">CONSTRUCTORA Y COMERCIALIZADORA LP SPA</span>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <div class="field-info">
+                <span class="label">RUT</span>
+                <span class="value" id="rut-val">78.040.773-5</span>
+            </div>
+            <button class="btn-copy" onclick="copyText('78.040.773-5', this)">Copiar</button>
+        </div>
+
+        <div class="field-group">
+            <div class="field-info">
+                <span class="label">Banco</span>
+                <span class="value">BancoEstado</span>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <div class="field-info">
+                <span class="label">Tipo de Cuenta</span>
+                <span class="value">Cuenta Corriente</span>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <div class="field-info">
+                <span class="label">N° de Cuenta</span>
+                <span class="value" id="cuenta-val">123456789</span>
+            </div>
+            <button class="btn-copy" onclick="copyText('123456789', this)">Copiar</button>
+        </div>
+
+        <div class="field-group">
+            <div class="field-info">
+                <span class="label">Correo Confirmación</span>
+                <span class="value" style="font-size: 0.85rem;">contacto@constructoralp.cl</span>
+            </div>
+            <button class="btn-copy" onclick="copyText('contacto@constructoralp.cl', this)">Copiar</button>
+        </div>
+
+        <button class="vcard-btn" onclick="downloadVCard()">Guardar Contacto en Agenda</button>
+    </div>
+
+    <a href="https://wa.me/56912345678?text=Hola,%20adjunto%20comprobante%20de%20transferencia." class="whatsapp-float" target="_blank">
+        WhatsApp
+    </a>
+
+    <script>
+        function copyText(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+                const originalText = btn.innerText;
+                btn.innerText = "¡Copiado!";
+                btn.classList.add("copied");
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.remove("copied");
+                }, 2000);
+            });
+        }
+
+        function downloadVCard() {
+            const vcardData = `BEGIN:VCARD
+VERSION:3.0
+FN:Constructora y Comercializadora LP SpA
+ORG:Constructora y Comercializadora LP SpA
+EMAIL:contacto@constructoralp.cl
+TEL:+56912345678
+END:VCARD`;
+
+            const blob = new Blob([vcardData], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'Constructora_LP.vcf');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
