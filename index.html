@@ -6,10 +6,8 @@
     <title>Datos de Transferencia - Constructora LP</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --card-bg: rgba(30, 41, 59, 0.92);
             --accent: #38bdf8;
-            --accent-hover: #0284c7;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #22c55e;
@@ -23,7 +21,11 @@
         }
 
         body {
-            background-color: var(--bg-color);
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                        url('https://images.unsplash.com/photo-1541888946425-d0fbb186c5f0?auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-main);
             display: flex;
             justify-content: center;
@@ -34,12 +36,13 @@
 
         .card {
             background-color: var(--card-bg);
+            backdrop-filter: blur(8px);
             border-radius: 16px;
             padding: 24px;
             width: 100%;
             max-width: 400px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            border: 1px solid #334155;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .header {
@@ -48,22 +51,23 @@
         }
 
         .header h1 {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
         }
 
         .header p {
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         .field-group {
-            margin-bottom: 16px;
-            background: #0f172a;
-            padding: 12px 16px;
+            margin-bottom: 12px;
+            background: rgba(15, 23, 42, 0.7);
+            padding: 12px 14px;
             border-radius: 10px;
             display: flex;
             justify-content: space-between;
@@ -73,29 +77,34 @@
         .field-info {
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            padding-right: 8px;
         }
 
         .label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .value {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             margin-top: 2px;
+            word-break: break-word;
         }
 
         .btn-copy {
             background-color: var(--accent);
             color: #0f172a;
             border: none;
-            padding: 8px 14px;
+            padding: 8px 12px;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
+            flex-shrink: 0;
             transition: all 0.2s ease;
         }
 
@@ -112,30 +121,40 @@
             padding: 12px;
             border-radius: 10px;
             font-weight: bold;
+            font-size: 0.9rem;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 14px;
             transition: background 0.2s;
         }
 
         .vcard-btn:active {
-            background-color: rgba(56, 189, 248, 0.1);
+            background-color: rgba(56, 189, 248, 0.15);
         }
 
         .whatsapp-float {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 24px;
+            right: 24px;
+            width: 58px;
+            height: 58px;
             background-color: #25d366;
-            color: white;
-            border-radius: 50px;
-            padding: 12px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border-radius: 50%;
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 8px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            transition: transform 0.2s ease;
+        }
+
+        .whatsapp-float:active {
+            transform: scale(0.9);
+        }
+
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
         }
     </style>
 </head>
@@ -143,21 +162,21 @@
 
     <div class="card">
         <div class="header">
-            <h1>Constructora LP SpA</h1>
-            <p>Datos oficiales de transferencia</p>
+            <h1>Constructora y Comercializadora LP SpA</h1>
+            <p>Datos de Transferencia Bancaria</p>
         </div>
 
         <div class="field-group">
             <div class="field-info">
-                <span class="label">Razon Social</span>
-                <span class="value">CONSTRUCTORA Y COMERCIALIZADORA LP SPA</span>
+                <span class="label">Razón Social</span>
+                <span class="value" style="font-size: 0.85rem;">CONSTRUCTORA Y COMERCIALIZADORA LP SPA</span>
             </div>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">RUT</span>
-                <span class="value" id="rut-val">78.040.773-5</span>
+                <span class="value">78.040.773-5</span>
             </div>
             <button class="btn-copy" onclick="copyText('78.040.773-5', this)">Copiar</button>
         </div>
@@ -165,38 +184,40 @@
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Banco</span>
-                <span class="value">BancoEstado</span>
+                <span class="value">Banco BCI</span>
             </div>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Tipo de Cuenta</span>
-                <span class="value">Cuenta Corriente</span>
+                <span class="value">Cuenta Corriente en Pesos</span>
             </div>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">N° de Cuenta</span>
-                <span class="value" id="cuenta-val">123456789</span>
+                <span class="value">97485799</span>
             </div>
-            <button class="btn-copy" onclick="copyText('123456789', this)">Copiar</button>
+            <button class="btn-copy" onclick="copyText('97485799', this)">Copiar</button>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Correo Confirmación</span>
-                <span class="value" style="font-size: 0.85rem;">contacto@constructoralp.cl</span>
+                <span class="value" style="font-size: 0.8rem;">LPCONSTRUCTORA0@GMAIL.COM</span>
             </div>
-            <button class="btn-copy" onclick="copyText('contacto@constructoralp.cl', this)">Copiar</button>
+            <button class="btn-copy" onclick="copyText('LPCONSTRUCTORA0@GMAIL.COM', this)">Copiar</button>
         </div>
 
         <button class="vcard-btn" onclick="downloadVCard()">Guardar Contacto en Agenda</button>
     </div>
 
-    <a href="https://wa.me/56912345678?text=Hola,%20adjunto%20comprobante%20de%20transferencia." class="whatsapp-float" target="_blank">
-        WhatsApp
+    <a href="https://wa.me/56995663306?text=Hola%20Luis,%20env%C3%ADo%20comprobante%20de%20transferencia." class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32">
+            <path d="M16 2a13 13 0 0 0-11.2 19.6L3 29l7.7-2A13 13 0 1 0 16 2zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-4 1 1-3.9-.3-.5A10.6 10.6 0 1 1 16 25.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.2-.6 0a8 8 0 0 1-2.4-1.5 8.9 8.9 0 0 1-1.6-2c-.2-.3 0-.5.1-.6s.3-.4.4-.6a1.7 1.7 0 0 0 .3-.5.6.6 0 0 0 0-.5c0-.2-.7-1.7-1-2.3s-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.2 2.7 6.4 6.4 0 0 0 1.3 3.4 14.7 14.7 0 0 0 5.7 5 19 19 0 0 0 1.9.7 4.6 4.6 0 0 0 2.1.1 3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.5c-.1-.1-.3-.2-.6-.4z"/>
+        </svg>
     </a>
 
     <script>
@@ -218,17 +239,17 @@
         function downloadVCard() {
             const vcardData = `BEGIN:VCARD
 VERSION:3.0
-FN:Constructora y Comercializadora LP SpA
+FN:Luis Paillaleve - Constructora LP
 ORG:Constructora y Comercializadora LP SpA
-EMAIL:contacto@constructoralp.cl
-TEL:+56912345678
+EMAIL:LPCONSTRUCTORA0@GMAIL.COM
+TEL:+56995663306
 END:VCARD`;
 
             const blob = new Blob([vcardData], { type: 'text/vcard' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.setAttribute('href', url);
-            a.setAttribute('download', 'Constructora_LP.vcf');
+            a.setAttribute('download', 'Luis_Paillaleve_Constructora_LP.vcf');
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
