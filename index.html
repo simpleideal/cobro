@@ -179,6 +179,16 @@
             transform: scale(0.97);
         }
 
+        .btn-primary.copied {
+            background-color: var(--success);
+            color: #fff;
+        }
+
+        .btn-primary.failed {
+            background-color: var(--danger);
+            color: #fff;
+        }
+
         .btn-secondary {
             width: 100%;
             background-color: transparent;
@@ -447,16 +457,17 @@
             <button class="btn-copy" data-copiar="correo">Copiar</button>
         </div>
 
-        <button class="btn-primary" id="btnPasoAPaso">Copiar para transferir (paso a paso)</button>
+        <button class="btn-primary" id="btnCopiarTodo">Copiar todos los datos</button>
 
-        <button class="btn-secondary" id="btnCopiarTodo">Copiar todos los datos como texto</button>
+        <button class="btn-secondary" id="btnPasoAPaso">Copiar dato por dato (paso a paso)</button>
 
         <button class="btn-secondary" id="btnVCard">Guardar Contacto en Agenda</button>
 
         <p class="nota">
-            Los formularios de los bancos piden un dato por campo. Usa
-            <strong>paso a paso</strong> para copiar y pegar cada uno por separado.
-            El texto completo sirve para enviarlo por WhatsApp o correo.
+            En la app de tu banco busca la opción <strong>pegar datos</strong> al
+            agregar un destinatario: con el primer botón se llena el formulario
+            completo. Si tu banco no la tiene, usa <strong>dato por dato</strong>
+            y pega cada campo por separado.
         </p>
     </div>
 
@@ -519,14 +530,17 @@
             return clave === 'rut' ? DATOS.rut[formatoRut] : DATOS[clave];
         }
 
+        // Las apps que ofrecen "pegar datos" reconocen los campos por su etiqueta,
+        // así que cada línea va rotulada y sin abreviar. Sin "Nombre:" el titular
+        // queda sin identificar y el formulario se llena incompleto.
         function textoCompleto() {
             return [
-                DATOS.razonSocial,
+                'Nombre: ' + DATOS.razonSocial,
                 'RUT: ' + DATOS.rut[formatoRut],
-                'BANCO: ' + DATOS.banco,
-                'TIPO: ' + DATOS.tipoCuenta.toUpperCase(),
-                'N° CUENTA: ' + DATOS.cuenta,
-                'CORREO: ' + DATOS.correo
+                'Banco: ' + DATOS.banco,
+                'Tipo de cuenta: ' + DATOS.tipoCuenta,
+                'N° de cuenta: ' + DATOS.cuenta,
+                'Correo: ' + DATOS.correo
             ].join('\n');
         }
 
