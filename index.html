@@ -468,6 +468,9 @@
             agregar un destinatario: con el primer botón se llena el formulario
             completo. Si tu banco no la tiene, usa <strong>dato por dato</strong>
             y pega cada campo por separado.
+            <br>
+            Antes de confirmar, revisa que el banco y el número de cuenta hayan
+            quedado bien.
         </p>
     </div>
 
@@ -531,15 +534,16 @@
         }
 
         // Las apps que ofrecen "pegar datos" reconocen los campos por su etiqueta,
-        // así que cada línea va rotulada y sin abreviar. Sin "Nombre:" el titular
-        // queda sin identificar y el formulario se llena incompleto.
+        // así que cada línea va rotulada y sin abreviar: sin "Nombre:" el titular
+        // queda sin identificar, y Banco Falabella ignora "N° de cuenta" pero sí
+        // reconoce "Número de cuenta".
         function textoCompleto() {
             return [
                 'Nombre: ' + DATOS.razonSocial,
                 'RUT: ' + DATOS.rut[formatoRut],
                 'Banco: ' + DATOS.banco,
                 'Tipo de cuenta: ' + DATOS.tipoCuenta,
-                'N° de cuenta: ' + DATOS.cuenta,
+                'Número de cuenta: ' + DATOS.cuenta,
                 'Correo: ' + DATOS.correo
             ].join('\n');
         }
