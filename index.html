@@ -602,6 +602,21 @@
             }
         }
 
+        const temporizadores = new WeakMap();
+
+        function feedbackBoton(boton, etiqueta, exito) {
+            const original = boton.dataset.textoOriginal || boton.innerText;
+            boton.dataset.textoOriginal = original;
+            clearTimeout(temporizadores.get(boton));
+            boton.innerText = etiqueta;
+            boton.classList.toggle('copied', exito);
+            boton.classList.toggle('failed', !exito);
+            temporizadores.set(boton, setTimeout(() => {
+                boton.innerText = original;
+                boton.classList.remove('copied', 'failed');
+            }, 2000));
+        }
+
         async function copiarConFeedback(texto, boton, etiquetaOk) {
             const exito = await copiar(texto);
 
@@ -614,15 +629,7 @@
             }
 
             if (boton) {
-                const original = boton.dataset.textoOriginal || boton.innerText;
-                boton.dataset.textoOriginal = original;
-                boton.innerText = exito ? etiquetaOk : 'Error';
-                boton.classList.toggle('copied', exito);
-                boton.classList.toggle('failed', !exito);
-                setTimeout(() => {
-                    boton.innerText = original;
-                    boton.classList.remove('copied', 'failed');
-                }, 2000);
+                feedbackBoton(boton, exito ? etiquetaOk : 'Error', exito);
             }
 
             return exito;
@@ -732,12 +739,13 @@
             }
         });
 
-        document.getElementById('btnPasoSiguiente').addEventListener('click', async (evento) => {
+        // Sin feedback en el botón: su texto lo controla renderPaso al avanzar de paso.
+        document.getElementById('btnPasoSiguiente').addEventListener('click', async () => {
             const paso = pasos[indicePaso];
             const esUltimo = indicePaso === pasos.length - 1;
 
             if (!paso.seleccionar) {
-                const exito = await copiarConFeedback(valorDe(paso.clave), evento.currentTarget, '¡Copiado!');
+                const exito = await copiarConFeedback(valorDe(paso.clave));
                 if (!exito) {
                     return;
                 }
