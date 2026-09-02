@@ -11,6 +11,7 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #22c55e;
+            --danger: #ef4444;
         }
 
         * {
@@ -93,6 +94,8 @@
             font-weight: 600;
             margin-top: 2px;
             word-break: break-word;
+            user-select: all;
+            -webkit-user-select: all;
         }
 
         .btn-copy {
@@ -113,13 +116,55 @@
             color: #fff;
         }
 
-        /* --- NUEVO BOTÓN PARA COPIAR TODO --- */
-        .btn-copy-all {
+        .btn-copy.failed {
+            background-color: var(--danger);
+            color: #fff;
+        }
+
+        /* Los formularios de los bancos aplican máscaras distintas al RUT:
+           unos aceptan puntos, otros solo dígitos. Se elige el formato antes de copiar. */
+        .formatos {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: -6px 0 12px;
+            padding: 0 4px;
+        }
+
+        .formatos .hint {
+            width: 100%;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .chip {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--text-muted);
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .chip[aria-pressed="true"] {
+            background: var(--accent);
+            border-color: transparent;
+            color: #0f172a;
+        }
+
+        .btn-primary {
             width: 100%;
             background-color: var(--accent);
             color: #0f172a;
             border: none;
-            padding: 12px;
+            padding: 14px;
             border-radius: 10px;
             font-weight: bold;
             font-size: 0.95rem;
@@ -129,16 +174,11 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
-        .btn-copy-all:active {
+        .btn-primary:active {
             transform: scale(0.97);
         }
 
-        .btn-copy-all.copied {
-            background-color: var(--success);
-            color: #fff;
-        }
-
-        .vcard-btn {
+        .btn-secondary {
             width: 100%;
             background-color: transparent;
             border: 1px solid var(--accent);
@@ -152,8 +192,22 @@
             transition: background 0.2s;
         }
 
-        .vcard-btn:active {
+        .btn-secondary:active {
             background-color: rgba(176, 176, 176, 0.15);
+        }
+
+        .btn-secondary.copied {
+            background-color: var(--success);
+            border-color: var(--success);
+            color: #fff;
+        }
+
+        .nota {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+            margin-top: 14px;
+            text-align: center;
         }
 
         .whatsapp-float {
@@ -181,6 +235,154 @@
             height: 32px;
             fill: #ffffff;
         }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 2000;
+        }
+
+        .overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background-color: rgba(45, 45, 45, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 22px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+
+        .modal-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .paso-contador {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-cerrar {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+
+        .barra {
+            height: 4px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .barra span {
+            display: block;
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.25s ease;
+        }
+
+        .paso-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .paso-valor {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 6px;
+            word-break: break-word;
+            user-select: all;
+            -webkit-user-select: all;
+        }
+
+        .paso-ayuda {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+            margin-top: 10px;
+        }
+
+        .modal-acciones {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-acciones .btn-primary,
+        .modal-acciones .btn-secondary {
+            margin-top: 0;
+        }
+
+        .modal-acciones .btn-secondary {
+            width: auto;
+            flex-shrink: 0;
+            padding: 14px 16px;
+        }
+
+        .manual-texto {
+            width: 100%;
+            min-height: 130px;
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.35);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 28px;
+            transform: translate(-50%, 20px);
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-main);
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 3000;
+            max-width: calc(100% - 40px);
+            text-align: center;
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .toast.error {
+            border-color: var(--danger);
+        }
     </style>
 </head>
 <body>
@@ -194,16 +396,24 @@
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Razón Social</span>
-                <span class="value" style="font-size: 0.85rem;">CONSTRUCTORA Y COMERCIALIZADORA LP SPA</span>
+                <span class="value" style="font-size: 0.85rem;" id="valorRazonSocial">CONSTRUCTORA Y COMERCIALIZADORA LP SPA</span>
             </div>
+            <button class="btn-copy" data-copiar="razonSocial">Copiar</button>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">RUT</span>
-                <span class="value">78.040.773-5</span>
+                <span class="value" id="valorRut">78.040.773-5</span>
             </div>
-            <button class="btn-copy" onclick="copyText('78.040.773-5', this)">Copiar</button>
+            <button class="btn-copy" data-copiar="rut">Copiar</button>
+        </div>
+
+        <div class="formatos" role="group" aria-label="Formato del RUT">
+            <span class="hint">Formato del RUT según el banco</span>
+            <button class="chip" data-formato="puntos" aria-pressed="true">78.040.773-5</button>
+            <button class="chip" data-formato="guion" aria-pressed="false">78040773-5</button>
+            <button class="chip" data-formato="digitos" aria-pressed="false">780407735</button>
         </div>
 
         <div class="field-group">
@@ -225,7 +435,7 @@
                 <span class="label">N° de Cuenta</span>
                 <span class="value">97485799</span>
             </div>
-            <button class="btn-copy" onclick="copyText('97485799', this)">Copiar</button>
+            <button class="btn-copy" data-copiar="cuenta">Copiar</button>
         </div>
 
         <div class="field-group">
@@ -233,15 +443,20 @@
                 <span class="label">Correo Confirmación</span>
                 <span class="value" style="font-size: 0.8rem;">LPCONSTRUCTORA0@GMAIL.COM</span>
             </div>
-            <button class="btn-copy" onclick="copyText('LPCONSTRUCTORA0@GMAIL.COM', this)">Copiar</button>
+            <button class="btn-copy" data-copiar="correo">Copiar</button>
         </div>
 
-        <!-- NUEVO BOTÓN PARA COPIAR TODOS LOS DATOS -->
-        <button id="copyAllBtn" class="btn-copy-all" onclick="copyAllData()">
-            📋 Copiar Todos los Datos
-        </button>
+        <button class="btn-primary" id="btnPasoAPaso">Copiar para transferir (paso a paso)</button>
 
-        <button class="vcard-btn" onclick="downloadVCard()">Guardar Contacto en Agenda</button>
+        <button class="btn-secondary" id="btnCopiarTodo">Copiar todos los datos como texto</button>
+
+        <button class="btn-secondary" id="btnVCard">Guardar Contacto en Agenda</button>
+
+        <p class="nota">
+            Los formularios de los bancos piden un dato por campo. Usa
+            <strong>paso a paso</strong> para copiar y pegar cada uno por separado.
+            El texto completo sirve para enviarlo por WhatsApp o correo.
+        </p>
     </div>
 
     <a href="https://wa.me/56995663306?text=Hola%20Luis,%20env%C3%ADo%20comprobante%20de%20transferencia." class="whatsapp-float" target="_blank" aria-label="WhatsApp">
@@ -250,65 +465,336 @@
         </svg>
     </a>
 
+    <div class="overlay" id="overlayPasos" role="dialog" aria-modal="true" aria-labelledby="pasoLabel">
+        <div class="modal">
+            <div class="modal-top">
+                <span class="paso-contador" id="pasoContador">Paso 1 de 6</span>
+                <button class="btn-cerrar" id="btnCerrarPasos" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="barra"><span id="pasoBarra" style="width: 0%"></span></div>
+            <span class="paso-label" id="pasoLabel">Razón Social</span>
+            <div class="paso-valor" id="pasoValor">—</div>
+            <p class="paso-ayuda" id="pasoAyuda"></p>
+            <div class="modal-acciones">
+                <button class="btn-secondary" id="btnPasoAtras">Atrás</button>
+                <button class="btn-primary" id="btnPasoSiguiente">Copiar y continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlayManual" role="dialog" aria-modal="true" aria-labelledby="manualTitulo">
+        <div class="modal">
+            <div class="modal-top">
+                <span class="paso-contador" id="manualTitulo">Copia manual</span>
+                <button class="btn-cerrar" id="btnCerrarManual" aria-label="Cerrar">&times;</button>
+            </div>
+            <p class="paso-ayuda">
+                Tu navegador bloqueó la copia automática. Mantén presionado el texto,
+                elige <strong>Seleccionar todo</strong> y luego <strong>Copiar</strong>.
+            </p>
+            <textarea class="manual-texto" id="manualTexto" readonly></textarea>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
     <script>
-        // Función para copiar texto celda por celda (ya existente)
-        function copyText(text, btn) {
-            navigator.clipboard.writeText(text).then(() => {
-                if (navigator.vibrate) {
-                    navigator.vibrate(50);
+        const DATOS = {
+            razonSocial: 'CONSTRUCTORA Y COMERCIALIZADORA LP SPA',
+            rut: {
+                puntos: '78.040.773-5',
+                guion: '78040773-5',
+                digitos: '780407735'
+            },
+            banco: 'Banco BCI',
+            tipoCuenta: 'Cuenta Corriente',
+            cuenta: '97485799',
+            correo: 'LPCONSTRUCTORA0@GMAIL.COM'
+        };
+
+        let formatoRut = 'puntos';
+
+        function valorDe(clave) {
+            return clave === 'rut' ? DATOS.rut[formatoRut] : DATOS[clave];
+        }
+
+        function textoCompleto() {
+            return [
+                DATOS.razonSocial,
+                'RUT: ' + DATOS.rut[formatoRut],
+                'BANCO: ' + DATOS.banco,
+                'TIPO: ' + DATOS.tipoCuenta.toUpperCase(),
+                'N° CUENTA: ' + DATOS.cuenta,
+                'CORREO: ' + DATOS.correo
+            ].join('\n');
+        }
+
+        // La Clipboard API solo existe en contextos seguros (HTTPS) y muchos navegadores
+        // dentro de apps (WhatsApp, Instagram) la rechazan sin avisar: de ahí el respaldo.
+        function copiaLegacy(texto) {
+            const area = document.createElement('textarea');
+            area.value = texto;
+            area.setAttribute('readonly', '');
+            area.style.position = 'fixed';
+            area.style.top = '0';
+            area.style.left = '0';
+            area.style.opacity = '0';
+            document.body.appendChild(area);
+
+            const esIOS = /ipad|iphone|ipod/i.test(navigator.userAgent);
+            if (esIOS) {
+                area.contentEditable = 'true';
+                area.readOnly = false;
+                const rango = document.createRange();
+                rango.selectNodeContents(area);
+                const seleccion = window.getSelection();
+                seleccion.removeAllRanges();
+                seleccion.addRange(rango);
+                area.setSelectionRange(0, texto.length);
+            } else {
+                area.select();
+            }
+
+            let exito = false;
+            try {
+                exito = document.execCommand('copy');
+            } catch (e) {
+                exito = false;
+            }
+
+            document.body.removeChild(area);
+            return exito;
+        }
+
+        async function copiar(texto) {
+            if (navigator.clipboard && window.isSecureContext) {
+                try {
+                    await navigator.clipboard.writeText(texto);
+                    return true;
+                } catch (e) {
+                    // Cae al respaldo.
                 }
-                const originalText = btn.innerText;
-                btn.innerText = "¡Copiado!";
-                btn.classList.add("copied");
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.classList.remove("copied");
-                }, 2000);
-            });
+            }
+            return copiaLegacy(texto);
         }
 
-        // NUEVA FUNCIÓN para copiar TODOS los datos de una vez
-        function copyAllData() {
-            const data = `CONSTRUCTORA Y COMERCIALIZADORA LP SPA
-RUT: 78.040.773-5
-BANCO: BCI
-TIPO: CUENTA CORRIENTE
-N° CUENTA: 97485799
-CORREO: LPCONSTRUCTORA0@GMAIL.COM`;
-
-            navigator.clipboard.writeText(data).then(() => {
-                const btn = document.getElementById('copyAllBtn');
-                const originalText = btn.innerText;
-                btn.innerText = "✅ ¡Todos Copiados!";
-                btn.classList.add("copied");
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.classList.remove("copied");
-                }, 2500);
-            }).catch(() => {
-                alert("No se pudo copiar. Revisa los permisos del navegador.");
-            });
+        let toastTimer;
+        function mostrarToast(mensaje, esError) {
+            const toast = document.getElementById('toast');
+            toast.textContent = mensaje;
+            toast.classList.toggle('error', !!esError);
+            toast.classList.add('visible');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('visible'), 2200);
         }
 
-        // Función para descargar el contacto (ya existente)
-        function downloadVCard() {
-            const vcardData = `BEGIN:VCARD
-VERSION:3.0
-FN:Luis Paillaleve - Constructora LP
-ORG:Constructora y Comercializadora LP SpA
-EMAIL:LPCONSTRUCTORA0@GMAIL.COM
-TEL:+56995663306
-END:VCARD`;
+        function abrirCopiaManual(texto) {
+            const area = document.getElementById('manualTexto');
+            area.value = texto;
+            document.getElementById('overlayManual').classList.add('open');
+            area.focus();
+            area.setSelectionRange(0, texto.length);
+        }
+
+        function vibrar() {
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+
+        const temporizadores = new WeakMap();
+
+        function feedbackBoton(boton, etiqueta, exito) {
+            const original = boton.dataset.textoOriginal || boton.innerText;
+            boton.dataset.textoOriginal = original;
+            clearTimeout(temporizadores.get(boton));
+            boton.innerText = etiqueta;
+            boton.classList.toggle('copied', exito);
+            boton.classList.toggle('failed', !exito);
+            temporizadores.set(boton, setTimeout(() => {
+                boton.innerText = original;
+                boton.classList.remove('copied', 'failed');
+            }, 2000));
+        }
+
+        async function copiarConFeedback(texto, boton, etiquetaOk) {
+            const exito = await copiar(texto);
+
+            if (exito) {
+                vibrar();
+                mostrarToast('Copiado: ' + texto);
+            } else {
+                mostrarToast('No se pudo copiar automáticamente', true);
+                abrirCopiaManual(texto);
+            }
+
+            if (boton) {
+                feedbackBoton(boton, exito ? etiquetaOk : 'Error', exito);
+            }
+
+            return exito;
+        }
+
+        document.querySelectorAll('[data-copiar]').forEach((boton) => {
+            boton.addEventListener('click', () => {
+                copiarConFeedback(valorDe(boton.dataset.copiar), boton, '¡Copiado!');
+            });
+        });
+
+        document.querySelectorAll('.chip').forEach((chip) => {
+            chip.addEventListener('click', () => {
+                formatoRut = chip.dataset.formato;
+                document.querySelectorAll('.chip').forEach((otro) => {
+                    otro.setAttribute('aria-pressed', String(otro === chip));
+                });
+                document.getElementById('valorRut').textContent = DATOS.rut[formatoRut];
+                if (pasos[indicePaso] && pasos[indicePaso].clave === 'rut') {
+                    renderPaso();
+                }
+            });
+        });
+
+        document.getElementById('btnCopiarTodo').addEventListener('click', (evento) => {
+            copiarConFeedback(textoCompleto(), evento.currentTarget, '¡Todos copiados!');
+        });
+
+        const pasos = [
+            {
+                clave: 'razonSocial',
+                label: 'Nombre / Razón Social',
+                ayuda: 'Pégalo en el campo "Nombre del destinatario".'
+            },
+            {
+                clave: 'rut',
+                label: 'RUT',
+                ayuda: 'Si el banco rechaza el formato, cierra esta ventana y elige otro formato de RUT.'
+            },
+            {
+                clave: 'banco',
+                label: 'Banco',
+                seleccionar: true,
+                ayuda: 'Selecciónalo en la lista de bancos del formulario. No se pega, se elige.'
+            },
+            {
+                clave: 'tipoCuenta',
+                label: 'Tipo de Cuenta',
+                seleccionar: true,
+                ayuda: 'Elige "Cuenta Corriente" en el menú del formulario.'
+            },
+            {
+                clave: 'cuenta',
+                label: 'N° de Cuenta',
+                ayuda: 'Pégalo sin espacios ni puntos. Son solo dígitos.'
+            },
+            {
+                clave: 'correo',
+                label: 'Correo de Confirmación',
+                ayuda: 'Es el correo al que llega el comprobante de la transferencia.'
+            }
+        ];
+
+        let indicePaso = 0;
+
+        function renderPaso() {
+            const paso = pasos[indicePaso];
+            document.getElementById('pasoContador').textContent =
+                'Paso ' + (indicePaso + 1) + ' de ' + pasos.length;
+            document.getElementById('pasoBarra').style.width =
+                ((indicePaso + 1) / pasos.length) * 100 + '%';
+            document.getElementById('pasoLabel').textContent = paso.label;
+            document.getElementById('pasoValor').textContent = valorDe(paso.clave);
+            document.getElementById('pasoAyuda').textContent = paso.ayuda;
+            document.getElementById('btnPasoAtras').disabled = indicePaso === 0;
+            document.getElementById('btnPasoAtras').style.opacity = indicePaso === 0 ? '0.4' : '1';
+
+            const esUltimo = indicePaso === pasos.length - 1;
+            const siguiente = document.getElementById('btnPasoSiguiente');
+            if (paso.seleccionar) {
+                siguiente.innerText = esUltimo ? 'Listo' : 'Ya lo elegí, continuar';
+            } else {
+                siguiente.innerText = esUltimo ? 'Copiar y terminar' : 'Copiar y continuar';
+            }
+        }
+
+        function abrirPasos() {
+            indicePaso = 0;
+            renderPaso();
+            document.getElementById('overlayPasos').classList.add('open');
+        }
+
+        function cerrarPasos() {
+            document.getElementById('overlayPasos').classList.remove('open');
+        }
+
+        document.getElementById('btnPasoAPaso').addEventListener('click', abrirPasos);
+        document.getElementById('btnCerrarPasos').addEventListener('click', cerrarPasos);
+        document.getElementById('btnCerrarManual').addEventListener('click', () => {
+            document.getElementById('overlayManual').classList.remove('open');
+        });
+
+        document.getElementById('btnPasoAtras').addEventListener('click', () => {
+            if (indicePaso > 0) {
+                indicePaso--;
+                renderPaso();
+            }
+        });
+
+        // Sin feedback en el botón: su texto lo controla renderPaso al avanzar de paso.
+        document.getElementById('btnPasoSiguiente').addEventListener('click', async () => {
+            const paso = pasos[indicePaso];
+            const esUltimo = indicePaso === pasos.length - 1;
+
+            if (!paso.seleccionar) {
+                const exito = await copiarConFeedback(valorDe(paso.clave));
+                if (!exito) {
+                    return;
+                }
+            }
+
+            if (esUltimo) {
+                cerrarPasos();
+                mostrarToast('Listo. Revisa los datos antes de transferir.');
+            } else {
+                indicePaso++;
+                renderPaso();
+            }
+        });
+
+        document.querySelectorAll('.overlay').forEach((overlay) => {
+            overlay.addEventListener('click', (evento) => {
+                if (evento.target === overlay) {
+                    overlay.classList.remove('open');
+                }
+            });
+        });
+
+        document.addEventListener('keydown', (evento) => {
+            if (evento.key === 'Escape') {
+                document.querySelectorAll('.overlay.open').forEach((o) => o.classList.remove('open'));
+            }
+        });
+
+        document.getElementById('btnVCard').addEventListener('click', () => {
+            const vcardData = [
+                'BEGIN:VCARD',
+                'VERSION:3.0',
+                'FN:Luis Paillaleve - Constructora LP',
+                'ORG:Constructora y Comercializadora LP SpA',
+                'EMAIL:' + DATOS.correo,
+                'TEL:+56995663306',
+                'END:VCARD'
+            ].join('\r\n');
 
             const blob = new Blob([vcardData], { type: 'text/vcard' });
             const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.setAttribute('href', url);
-            a.setAttribute('download', 'Luis_Paillaleve_Constructora_LP.vcf');
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
+            const enlace = document.createElement('a');
+            enlace.setAttribute('href', url);
+            enlace.setAttribute('download', 'Luis_Paillaleve_Constructora_LP.vcf');
+            document.body.appendChild(enlace);
+            enlace.click();
+            document.body.removeChild(enlace);
+            window.URL.revokeObjectURL(url);
+        });
     </script>
 </body>
 </html>
