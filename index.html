@@ -99,6 +99,12 @@
             -webkit-user-select: all;
         }
 
+        .value-secundario {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
         .btn-copy {
             background-color: var(--accent);
             color: #0f172a;
@@ -408,8 +414,9 @@
             <div class="field-info">
                 <span class="label">Razón Social</span>
                 <span class="value" style="font-size: 0.85rem;" id="valorRazonSocial">CONSTRUCTORA Y COMERCIALIZADORA LP SPA</span>
+                <span class="value-secundario">Para el banco: Constructora LP SpA</span>
             </div>
-            <button class="btn-copy" data-copiar="razonSocial">Copiar</button>
+            <button class="btn-copy" data-copiar="nombreCorto">Copiar</button>
         </div>
 
         <div class="field-group">
@@ -516,6 +523,9 @@
     <script>
         const DATOS = {
             razonSocial: 'CONSTRUCTORA Y COMERCIALIZADORA LP SPA',
+            // Los campos de nombre de los bancos cortan alrededor de 30 caracteres,
+            // así que al formulario va una versión corta y legible.
+            nombreCorto: 'Constructora LP SpA',
             rut: {
                 puntos: '78.040.773-5',
                 guion: '78040773-5',
@@ -539,7 +549,7 @@
         // reconoce "Número de cuenta".
         function textoCompleto() {
             return [
-                'Nombre: ' + DATOS.razonSocial,
+                'Nombre: ' + DATOS.nombreCorto,
                 'RUT: ' + DATOS.rut[formatoRut],
                 'Banco: ' + DATOS.banco,
                 'Tipo de cuenta: ' + DATOS.tipoCuenta,
@@ -679,9 +689,9 @@
 
         const pasos = [
             {
-                clave: 'razonSocial',
-                label: 'Nombre / Razón Social',
-                ayuda: 'Pégalo en el campo "Nombre del destinatario".'
+                clave: 'nombreCorto',
+                label: 'Nombre para el banco',
+                ayuda: 'Versión corta, porque el campo del banco recorta los nombres largos. La razón social completa está más arriba en la tarjeta.'
             },
             {
                 clave: 'rut',
