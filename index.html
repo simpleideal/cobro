@@ -47,6 +47,67 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Cada pestaña lleva el color institucional de su banco: es la señal más
+           rápida para saber a qué cuenta se está transfiriendo. */
+        .pestanas {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .pestana {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 52px;
+            padding: 10px 8px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background-color: rgba(70, 70, 70, 0.6);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            font-weight: 700;
+            line-height: 1.2;
+            cursor: pointer;
+            transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .pestana[aria-selected="true"] {
+            background-color: var(--banco-color);
+            background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(0, 0, 0, 0.4));
+            border-color: rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+        }
+
+        .pestana:active {
+            transform: scale(0.98);
+        }
+
+        .pestana-sigla {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--banco-color);
+            background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.25));
+            color: #ffffff;
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .pestana[aria-selected="true"] .pestana-sigla {
+            background-color: #ffffff;
+            background-image: none;
+            color: var(--banco-color);
+        }
+
         .header {
             text-align: center;
             margin-bottom: 24px;
@@ -405,8 +466,10 @@
 <body>
 
     <div class="card">
+        <div class="pestanas" id="pestanas" role="tablist" aria-label="Cuenta bancaria" hidden></div>
+
         <div class="header">
-            <h1>Constructora y Comercializadora LP SpA</h1>
+            <h1 id="tituloEmpresa">Constructora y Comercializadora LP SpA</h1>
             <p>Datos de Transferencia Bancaria</p>
         </div>
 
@@ -414,7 +477,7 @@
             <div class="field-info">
                 <span class="label">Razón Social</span>
                 <span class="value" style="font-size: 0.85rem;" id="valorRazonSocial">CONSTRUCTORA Y COMERCIALIZADORA LP SPA</span>
-                <span class="value-secundario">Para el banco: Constructora LP SpA</span>
+                <span class="value-secundario" id="valorNombreCorto">Para el banco: Constructora LP SpA</span>
             </div>
             <button class="btn-copy" data-copiar="nombreCorto">Copiar</button>
         </div>
@@ -437,21 +500,21 @@
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Banco</span>
-                <span class="value">Banco BCI</span>
+                <span class="value" id="valorBanco">Banco BCI</span>
             </div>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Tipo de Cuenta</span>
-                <span class="value">Cuenta Corriente</span>
+                <span class="value" id="valorTipoCuenta">Cuenta Corriente</span>
             </div>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">N° de Cuenta</span>
-                <span class="value">97485799</span>
+                <span class="value" id="valorCuenta">97485799</span>
             </div>
             <button class="btn-copy" data-copiar="cuenta">Copiar</button>
         </div>
@@ -459,7 +522,7 @@
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Correo Confirmación</span>
-                <span class="value" style="font-size: 0.8rem;">LPCONSTRUCTORA0@GMAIL.COM</span>
+                <span class="value" style="font-size: 0.8rem;" id="valorCorreo">LPCONSTRUCTORA0@GMAIL.COM</span>
             </div>
             <button class="btn-copy" data-copiar="correo">Copiar</button>
         </div>
@@ -521,26 +584,54 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
-        const DATOS = {
-            razonSocial: 'CONSTRUCTORA Y COMERCIALIZADORA LP SPA',
-            // Los campos de nombre de los bancos cortan alrededor de 30 caracteres,
-            // así que al formulario va una versión corta y legible.
-            nombreCorto: 'Constructora LP SpA',
-            rut: {
-                puntos: '78.040.773-5',
-                guion: '78040773-5',
-                digitos: '780407735'
-            },
-            banco: 'Banco BCI',
-            tipoCuenta: 'Cuenta Corriente',
-            cuenta: '97485799',
-            correo: 'LPCONSTRUCTORA0@GMAIL.COM'
-        };
+        /* Para agregar otra cuenta basta con copiar un bloque completo dentro de
+           esta lista y cambiarle los valores. La barra de pestañas, el copiado y
+           el modo paso a paso se arman solos a partir de lo que haya aquí; con
+           una sola cuenta la barra no se muestra. */
+        const CUENTAS = [
+            {
+                // Texto de la pestaña: corto, porque comparte ancho con las demás.
+                etiqueta: 'Banco BCI',
+                // Va dentro del círculo de la pestaña, máximo 4 caracteres.
+                sigla: 'BCI',
+                // Color institucional del banco. La pestaña le aplica el degradado.
+                color: '#0a3d91',
+                titulo: 'Constructora y Comercializadora LP SpA',
+                razonSocial: 'CONSTRUCTORA Y COMERCIALIZADORA LP SPA',
+                // Los campos de nombre de los bancos cortan alrededor de 30 caracteres,
+                // así que al formulario va una versión corta y legible.
+                nombreCorto: 'Constructora LP SpA',
+                // Se escribe una sola vez: los tres formatos se derivan de aquí.
+                rut: '78.040.773-5',
+                banco: 'Banco BCI',
+                tipoCuenta: 'Cuenta Corriente',
+                cuenta: '97485799',
+                correo: 'LPCONSTRUCTORA0@GMAIL.COM'
+            }
+        ];
 
+        let indiceCuenta = 0;
         let formatoRut = 'puntos';
 
+        function cuentaActiva() {
+            return CUENTAS[indiceCuenta];
+        }
+
+        // Cada banco enmascara el RUT distinto: unos aceptan puntos, otros solo dígitos.
+        function formatosRut(rut) {
+            const limpio = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+            const cuerpo = limpio.slice(0, -1);
+            const dv = limpio.slice(-1);
+            return {
+                puntos: cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '-' + dv,
+                guion: cuerpo + '-' + dv,
+                digitos: cuerpo + dv
+            };
+        }
+
         function valorDe(clave) {
-            return clave === 'rut' ? DATOS.rut[formatoRut] : DATOS[clave];
+            const cuenta = cuentaActiva();
+            return clave === 'rut' ? formatosRut(cuenta.rut)[formatoRut] : cuenta[clave];
         }
 
         // Las apps que ofrecen "pegar datos" reconocen los campos por su etiqueta,
@@ -548,13 +639,14 @@
         // queda sin identificar, y Banco Falabella ignora "N° de cuenta" pero sí
         // reconoce "Número de cuenta".
         function textoCompleto() {
+            const cuenta = cuentaActiva();
             return [
-                'Nombre: ' + DATOS.nombreCorto,
-                'RUT: ' + DATOS.rut[formatoRut],
-                'Banco: ' + DATOS.banco,
-                'Tipo de cuenta: ' + DATOS.tipoCuenta,
-                'Número de cuenta: ' + DATOS.cuenta,
-                'Correo: ' + DATOS.correo
+                'Nombre: ' + cuenta.nombreCorto,
+                'RUT: ' + formatosRut(cuenta.rut)[formatoRut],
+                'Banco: ' + cuenta.banco,
+                'Tipo de cuenta: ' + cuenta.tipoCuenta,
+                'Número de cuenta: ' + cuenta.cuenta,
+                'Correo: ' + cuenta.correo
             ].join('\n');
         }
 
@@ -670,13 +762,64 @@
             });
         });
 
+        function renderRut() {
+            const formatos = formatosRut(cuentaActiva().rut);
+            document.getElementById('valorRut').textContent = formatos[formatoRut];
+            document.querySelectorAll('.chip').forEach((chip) => {
+                chip.textContent = formatos[chip.dataset.formato];
+                chip.setAttribute('aria-pressed', String(chip.dataset.formato === formatoRut));
+            });
+        }
+
+        function renderCuenta() {
+            const cuenta = cuentaActiva();
+            document.getElementById('tituloEmpresa').textContent = cuenta.titulo;
+            document.getElementById('valorRazonSocial').textContent = cuenta.razonSocial;
+            document.getElementById('valorNombreCorto').textContent = 'Para el banco: ' + cuenta.nombreCorto;
+            document.getElementById('valorBanco').textContent = cuenta.banco;
+            document.getElementById('valorTipoCuenta').textContent = cuenta.tipoCuenta;
+            document.getElementById('valorCuenta').textContent = cuenta.cuenta;
+            document.getElementById('valorCorreo').textContent = cuenta.correo;
+            renderRut();
+
+            document.querySelectorAll('.pestana').forEach((pestana, indice) => {
+                pestana.setAttribute('aria-selected', String(indice === indiceCuenta));
+            });
+        }
+
+        function renderPestanas() {
+            const contenedor = document.getElementById('pestanas');
+            if (CUENTAS.length < 2) {
+                return;
+            }
+            contenedor.hidden = false;
+
+            CUENTAS.forEach((cuenta, indice) => {
+                const pestana = document.createElement('button');
+                pestana.type = 'button';
+                pestana.className = 'pestana';
+                pestana.setAttribute('role', 'tab');
+                pestana.style.setProperty('--banco-color', cuenta.color);
+
+                const sigla = document.createElement('span');
+                sigla.className = 'pestana-sigla';
+                sigla.textContent = cuenta.sigla;
+                pestana.appendChild(sigla);
+                pestana.appendChild(document.createTextNode(cuenta.etiqueta));
+
+                pestana.addEventListener('click', () => {
+                    indiceCuenta = indice;
+                    renderCuenta();
+                });
+
+                contenedor.appendChild(pestana);
+            });
+        }
+
         document.querySelectorAll('.chip').forEach((chip) => {
             chip.addEventListener('click', () => {
                 formatoRut = chip.dataset.formato;
-                document.querySelectorAll('.chip').forEach((otro) => {
-                    otro.setAttribute('aria-pressed', String(otro === chip));
-                });
-                document.getElementById('valorRut').textContent = DATOS.rut[formatoRut];
+                renderRut();
                 if (pasos[indicePaso] && pasos[indicePaso].clave === 'rut') {
                     renderPaso();
                 }
@@ -804,12 +947,13 @@
         });
 
         document.getElementById('btnVCard').addEventListener('click', () => {
+            const cuenta = cuentaActiva();
             const vcardData = [
                 'BEGIN:VCARD',
                 'VERSION:3.0',
                 'FN:Luis Paillaleve - Constructora LP',
-                'ORG:Constructora y Comercializadora LP SpA',
-                'EMAIL:' + DATOS.correo,
+                'ORG:' + cuenta.titulo,
+                'EMAIL:' + cuenta.correo,
                 'TEL:+56995663306',
                 'END:VCARD'
             ].join('\r\n');
@@ -824,6 +968,9 @@
             document.body.removeChild(enlace);
             window.URL.revokeObjectURL(url);
         });
+
+        renderPestanas();
+        renderCuenta();
     </script>
 </body>
 </html>
