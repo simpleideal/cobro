@@ -584,6 +584,16 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
+        /* El contacto de la agenda y el WhatsApp son los mismos para todas las
+           cuentas: son de la empresa, no del banco. */
+        const CONTACTO = {
+            nombre: 'Luis Paillaleve - Constructora LP',
+            empresa: 'Constructora y Comercializadora LP SpA',
+            telefono: '+56995663306',
+            correo: 'LPCONSTRUCTORA0@GMAIL.COM',
+            archivo: 'Luis_Paillaleve_Constructora_LP.vcf'
+        };
+
         /* Para agregar otra cuenta basta con copiar un bloque completo dentro de
            esta lista y cambiarle los valores. La barra de pestañas, el copiado y
            el modo paso a paso se arman solos a partir de lo que haya aquí; con
@@ -595,7 +605,7 @@
                 // Va dentro del círculo de la pestaña, máximo 4 caracteres.
                 sigla: 'BCI',
                 // Color institucional del banco. La pestaña le aplica el degradado.
-                color: '#0a3d91',
+                color: '#2c70b8',
                 titulo: 'Constructora y Comercializadora LP SpA',
                 razonSocial: 'CONSTRUCTORA Y COMERCIALIZADORA LP SPA',
                 // Los campos de nombre de los bancos cortan alrededor de 30 caracteres,
@@ -947,14 +957,13 @@
         });
 
         document.getElementById('btnVCard').addEventListener('click', () => {
-            const cuenta = cuentaActiva();
             const vcardData = [
                 'BEGIN:VCARD',
                 'VERSION:3.0',
-                'FN:Luis Paillaleve - Constructora LP',
-                'ORG:' + cuenta.titulo,
-                'EMAIL:' + cuenta.correo,
-                'TEL:+56995663306',
+                'FN:' + CONTACTO.nombre,
+                'ORG:' + CONTACTO.empresa,
+                'EMAIL:' + CONTACTO.correo,
+                'TEL:' + CONTACTO.telefono,
                 'END:VCARD'
             ].join('\r\n');
 
@@ -962,7 +971,7 @@
             const url = window.URL.createObjectURL(blob);
             const enlace = document.createElement('a');
             enlace.setAttribute('href', url);
-            enlace.setAttribute('download', 'Luis_Paillaleve_Constructora_LP.vcf');
+            enlace.setAttribute('download', CONTACTO.archivo);
             document.body.appendChild(enlace);
             enlace.click();
             document.body.removeChild(enlace);
