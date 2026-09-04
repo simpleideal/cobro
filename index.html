@@ -24,7 +24,7 @@
 
         body {
             /* La imagen la pone el bloque CLIENTE. Si no carga, queda el fondo oscuro. */
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+            background: linear-gradient(var(--velo, rgba(0, 0, 0, 0.8)), var(--velo, rgba(0, 0, 0, 0.8))),
                         var(--fondo, #1c1c1c);
             background-size: cover;
             background-position: center;
@@ -1131,6 +1131,11 @@
             document.title = CLIENTE.titulo;
             document.documentElement.style.setProperty('--fondo', CLIENTE.fondo);
             document.documentElement.style.setProperty('--accent', CLIENTE.acento);
+            /* El velo oscurece la foto de fondo para que la tarjeta se lea encima.
+               Sobre un color o un degradado elegido a mano estorba, así que solo
+               se aplica cuando el fondo es una imagen. */
+            document.documentElement.style.setProperty(
+                '--velo', /^\s*url\(/i.test(CLIENTE.fondo) ? 'rgba(0, 0, 0, 0.8)' : 'transparent');
             document.getElementById('botonWhatsapp').href =
                 'https://wa.me/' + CONTACTO.whatsapp +
                 '?text=' + encodeURIComponent(CONTACTO.mensajeWhatsapp);
