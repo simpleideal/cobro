@@ -96,7 +96,8 @@ los suyos y las demás heredan los de `CLIENTE`.
 ## Agregar un banco al catálogo
 
 El catálogo `BANCOS` está justo debajo de los datos del cliente y se comparte
-entre todos los llaveros. Hoy tiene BCI y Banco de Chile con su logo.
+entre todos los llaveros. Hoy tiene BCI y Banco de Chile con su logo, y Santander
+y BancoEstado con la sigla, porque sus sitios no dejan bajar el SVG oficial.
 
 Para un banco que no esté, la versión mínima es:
 
