@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datos de Transferencia - Constructora LP</title>
+    <!-- El título real lo pone el bloque CLIENTE; este es el respaldo. -->
+    <title>Datos de Transferencia</title>
     <style>
         :root {
             --card-bg: rgba(50, 50, 50, 0.92);
@@ -22,8 +23,9 @@
         }
 
         body {
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
-                        url('https://images.unsplash.com/photo-1591955506264-3f5a6834570a?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Zm9uZG9zJTIwZGUlMjBwYW50YWxsYSUyMGRlJTIwY29uc3RydWNjaSVDMyVCM258ZW58MHx8MHx8fDA%3D');
+            /* La imagen la pone el bloque CLIENTE. Si no carga, queda el fondo oscuro. */
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                        var(--fondo, #1c1c1c);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -504,15 +506,15 @@
         <div class="pestanas" id="pestanas" role="tablist" aria-label="Cuenta bancaria" hidden></div>
 
         <div class="header">
-            <h1 id="tituloEmpresa">Constructora y Comercializadora LP SpA</h1>
+            <h1 id="tituloEmpresa">&mdash;</h1>
             <p>Datos de Transferencia Bancaria</p>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Razón Social</span>
-                <span class="value" style="font-size: 0.85rem;" id="valorRazonSocial">CONSTRUCTORA Y COMERCIALIZADORA LP SPA</span>
-                <span class="value-secundario" id="valorNombreCorto">Para el banco: Constructora LP SpA</span>
+                <span class="value" style="font-size: 0.85rem;" id="valorRazonSocial">&mdash;</span>
+                <span class="value-secundario" id="valorNombreCorto">&mdash;</span>
             </div>
             <button class="btn-copy" data-copiar="nombreCorto">Copiar</button>
         </div>
@@ -520,36 +522,36 @@
         <div class="field-group">
             <div class="field-info">
                 <span class="label">RUT</span>
-                <span class="value" id="valorRut">78.040.773-5</span>
+                <span class="value" id="valorRut">&mdash;</span>
             </div>
             <button class="btn-copy" data-copiar="rut">Copiar</button>
         </div>
 
         <div class="formatos" role="group" aria-label="Formato del RUT">
             <span class="hint">Formato del RUT según el banco</span>
-            <button class="chip" data-formato="puntos" aria-pressed="true">78.040.773-5</button>
-            <button class="chip" data-formato="guion" aria-pressed="false">78040773-5</button>
-            <button class="chip" data-formato="digitos" aria-pressed="false">780407735</button>
+            <button class="chip" data-formato="puntos" aria-pressed="true">&mdash;</button>
+            <button class="chip" data-formato="guion" aria-pressed="false">&mdash;</button>
+            <button class="chip" data-formato="digitos" aria-pressed="false">&mdash;</button>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Banco</span>
-                <span class="value" id="valorBanco">Banco BCI</span>
+                <span class="value" id="valorBanco">&mdash;</span>
             </div>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Tipo de Cuenta</span>
-                <span class="value" id="valorTipoCuenta">Cuenta Corriente</span>
+                <span class="value" id="valorTipoCuenta">&mdash;</span>
             </div>
         </div>
 
         <div class="field-group">
             <div class="field-info">
                 <span class="label">N° de Cuenta</span>
-                <span class="value" id="valorCuenta">97485799</span>
+                <span class="value" id="valorCuenta">&mdash;</span>
             </div>
             <button class="btn-copy" data-copiar="cuenta">Copiar</button>
         </div>
@@ -557,7 +559,7 @@
         <div class="field-group">
             <div class="field-info">
                 <span class="label">Correo Confirmación</span>
-                <span class="value" style="font-size: 0.8rem;" id="valorCorreo">LPCONSTRUCTORA0@GMAIL.COM</span>
+                <span class="value" style="font-size: 0.8rem;" id="valorCorreo">&mdash;</span>
             </div>
             <button class="btn-copy" data-copiar="correo">Copiar</button>
         </div>
@@ -579,7 +581,7 @@
         </p>
     </div>
 
-    <a href="https://wa.me/56995663306?text=Hola%20Luis,%20env%C3%ADo%20comprobante%20de%20transferencia." class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <a id="botonWhatsapp" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
         <svg viewBox="0 0 32 32">
             <path d="M16 2a13 13 0 0 0-11.2 19.6L3 29l7.7-2A13 13 0 1 0 16 2zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-4 1 1-3.9-.3-.5A10.6 10.6 0 1 1 16 25.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.2-.6 0a8 8 0 0 1-2.4-1.5 8.9 8.9 0 0 1-1.6-2c-.2-.3 0-.5.1-.6s.3-.4.4-.6a1.7 1.7 0 0 0 .3-.5.6.6 0 0 0 0-.5c0-.2-.7-1.7-1-2.3s-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.2 2.7 6.4 6.4 0 0 0 1.3 3.4 14.7 14.7 0 0 0 5.7 5 19 19 0 0 0 1.9.7 4.6 4.6 0 0 0 2.1.1 3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.5c-.1-.1-.3-.2-.6-.4z"/>
         </svg>
@@ -619,69 +621,119 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
-        /* El contacto de la agenda y el WhatsApp son los mismos para todas las
-           cuentas: son de la empresa, no del banco. */
-        const CONTACTO = {
-            nombre: 'Luis Paillaleve - Constructora LP',
+        /* ==================================================================
+           DATOS DEL CLIENTE
+
+           Esto es lo único que se cambia para un llavero nuevo. Debajo de la
+           línea "FIN DE LOS DATOS" no hace falta tocar nada.
+           ================================================================== */
+
+        const CLIENTE = {
+            // Se ve en la pestaña del navegador y al compartir el enlace.
+            titulo: 'Datos de Transferencia - Constructora LP',
+            // Encabezado de la tarjeta.
             empresa: 'Constructora y Comercializadora LP SpA',
-            telefono: '+56995663306',
-            correo: 'LPCONSTRUCTORA0@GMAIL.COM',
-            archivo: 'Luis_Paillaleve_Constructora_LP.vcf'
+            // Nombre legal completo, tal como está en el SII.
+            razonSocial: 'CONSTRUCTORA Y COMERCIALIZADORA LP SPA',
+            // Los campos de nombre de los bancos cortan alrededor de 30 caracteres,
+            // así que al formulario va esta versión corta.
+            nombreCorto: 'Constructora LP SpA',
+            // Se escribe una sola vez: los tres formatos se derivan de aquí.
+            rut: '78.040.773-5',
+            // Imagen de fondo. Conviene una foto oscura del rubro del cliente.
+            fondo: "url('https://images.unsplash.com/photo-1591955506264-3f5a6834570a?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Zm9uZG9zJTIwZGUlMjBwYW50YWxsYSUyMGRlJTIwY29uc3RydWNjaSVDMyVCM258ZW58MHx8MHx8fDA%3D')",
+            // Color de los botones. Debe contrastar contra texto oscuro.
+            acento: '#b0b0b0'
         };
 
-        /* Para agregar otra cuenta basta con copiar un bloque completo dentro de
-           esta lista y cambiarle los valores. La barra de pestañas, el copiado y
-           el modo paso a paso se arman solos a partir de lo que haya aquí; con
-           una sola cuenta la barra no se muestra. */
+        // Quien recibe el comprobante. No cambia según el banco.
+        const CONTACTO = {
+            nombre: 'Luis Paillaleve - Constructora LP',
+            telefono: '+56995663306',
+            correo: 'LPCONSTRUCTORA0@GMAIL.COM',
+            // Solo dígitos con código de país, sin + ni espacios.
+            whatsapp: '56995663306',
+            mensajeWhatsapp: 'Hola Luis, envío comprobante de transferencia.',
+            archivoVcard: 'Luis_Paillaleve_Constructora_LP.vcf'
+        };
+
+        /* Las cuentas del cliente, en el orden en que aparecen las pestañas.
+           "banco" es una clave del catálogo BANCOS de más abajo.
+           "correo" es opcional: sin él se usa el de CONTACTO.
+           Con una sola cuenta la barra de pestañas no se muestra. */
         const CUENTAS = [
             {
-                // Nombre del banco. Con logo se usa como etiqueta para lectores de
-                // pantalla; sin logo, se muestra escrito en la pestaña.
-                etiqueta: 'Banco BCI',
-                // Logo incrustado al inicio del body. Si el banco no tiene uno,
-                // se borra esta línea y la pestaña muestra la sigla y el nombre.
-                logo: 'logoBci',
-                // Alto del logo en la pestaña. Se ajusta a ojo por banco, porque
-                // cada marca tiene una proporción distinta.
-                logoAlto: 26,
-                // Se usa solo cuando el banco no tiene logo, máximo 4 caracteres.
-                sigla: 'BCI',
-                // Color institucional del banco. La pestaña le aplica el degradado.
-                color: '#1f5d9f',
-                titulo: 'Constructora y Comercializadora LP SpA',
-                razonSocial: 'CONSTRUCTORA Y COMERCIALIZADORA LP SPA',
-                // Los campos de nombre de los bancos cortan alrededor de 30 caracteres,
-                // así que al formulario va una versión corta y legible.
-                nombreCorto: 'Constructora LP SpA',
-                // Se escribe una sola vez: los tres formatos se derivan de aquí.
-                rut: '78.040.773-5',
-                banco: 'Banco BCI',
+                banco: 'bci',
                 tipoCuenta: 'Cuenta Corriente',
-                cuenta: '97485799',
-                correo: 'LPCONSTRUCTORA0@GMAIL.COM'
+                cuenta: '97485799'
             },
             {
-                etiqueta: 'Banco de Chile',
-                logo: 'logoBancoDeChile',
-                logoAlto: 18,
-                sigla: 'BCH',
-                color: '#173a79',
-                titulo: 'Constructora y Comercializadora LP SpA',
-                razonSocial: 'CONSTRUCTORA Y COMERCIALIZADORA LP SPA',
-                nombreCorto: 'Constructora LP SpA',
-                rut: '78.040.773-5',
-                banco: 'Banco de Chile',
+                banco: 'bancoDeChile',
                 tipoCuenta: 'Cuenta Corriente',
                 cuenta: '2602899910',
                 correo: 'joserespaldo4@gmail.com'
             }
         ];
 
+        /* ==================================================================
+           FIN DE LOS DATOS DEL CLIENTE
+           ================================================================== */
+
+        /* Catálogo de bancos, compartido por todos los llaveros. Se agrega uno
+           nuevo cuando aparece; ver el README para el paso a paso.
+
+           logo: id de un <symbol> incrustado al inicio del <body>. Si el banco
+                 no tiene logo cargado, se omite y la pestaña muestra la sigla.
+           logoAlto: alto en píxeles dentro de la pestaña. Se ajusta a ojo,
+                 porque cada marca tiene su propia proporción.
+           color: color institucional del banco, de fondo en la pestaña activa. */
+        const BANCOS = {
+            bci: {
+                nombre: 'Banco BCI',
+                sigla: 'BCI',
+                // Más oscuro que el #2c70b8 de la marca: el logo trae una hoja de
+                // ese mismo azul que se perdía contra el fondo.
+                color: '#1f5d9f',
+                logo: 'logoBci',
+                logoAlto: 26
+            },
+            bancoDeChile: {
+                nombre: 'Banco de Chile',
+                sigla: 'BCH',
+                color: '#173a79',
+                logo: 'logoBancoDeChile',
+                logoAlto: 18
+            }
+        };
+
         let indiceCuenta = 0;
         let formatoRut = 'puntos';
 
+        /* Junta los datos de la cuenta con los del cliente y los del banco. Una
+           cuenta puede traer su propia razón social, RUT o nombre corto si el
+           cliente factura con más de una empresa; si no, hereda los de CLIENTE. */
+        function datosDeCuenta(indice) {
+            const cuenta = CUENTAS[indice];
+            const banco = BANCOS[cuenta.banco];
+
+            return {
+                empresa: cuenta.empresa || CLIENTE.empresa,
+                razonSocial: cuenta.razonSocial || CLIENTE.razonSocial,
+                nombreCorto: cuenta.nombreCorto || CLIENTE.nombreCorto,
+                rut: cuenta.rut || CLIENTE.rut,
+                banco: banco.nombre,
+                tipoCuenta: cuenta.tipoCuenta,
+                cuenta: cuenta.cuenta,
+                correo: cuenta.correo || CONTACTO.correo,
+                sigla: banco.sigla,
+                color: banco.color,
+                logo: banco.logo,
+                logoAlto: banco.logoAlto
+            };
+        }
+
         function cuentaActiva() {
-            return CUENTAS[indiceCuenta];
+            return datosDeCuenta(indiceCuenta);
         }
 
         // Cada banco enmascara el RUT distinto: unos aceptan puntos, otros solo dígitos.
@@ -840,7 +892,7 @@
 
         function renderCuenta() {
             const cuenta = cuentaActiva();
-            document.getElementById('tituloEmpresa').textContent = cuenta.titulo;
+            document.getElementById('tituloEmpresa').textContent = cuenta.empresa;
             document.getElementById('valorRazonSocial').textContent = cuenta.razonSocial;
             document.getElementById('valorNombreCorto').textContent = 'Para el banco: ' + cuenta.nombreCorto;
             document.getElementById('valorBanco').textContent = cuenta.banco;
@@ -882,13 +934,14 @@
             }
             contenedor.hidden = false;
 
-            CUENTAS.forEach((cuenta, indice) => {
+            CUENTAS.forEach((_, indice) => {
+                const cuenta = datosDeCuenta(indice);
                 const pestana = document.createElement('button');
                 pestana.type = 'button';
                 pestana.className = 'pestana';
                 pestana.setAttribute('role', 'tab');
                 pestana.style.setProperty('--banco-color', cuenta.color);
-                pestana.setAttribute('aria-label', cuenta.etiqueta);
+                pestana.setAttribute('aria-label', cuenta.banco);
 
                 if (cuenta.logo) {
                     pestana.appendChild(logoDe(cuenta));
@@ -897,7 +950,7 @@
                     sigla.className = 'pestana-sigla';
                     sigla.textContent = cuenta.sigla;
                     pestana.appendChild(sigla);
-                    pestana.appendChild(document.createTextNode(cuenta.etiqueta));
+                    pestana.appendChild(document.createTextNode(cuenta.banco));
                 }
 
                 pestana.addEventListener('click', () => {
@@ -1044,7 +1097,7 @@
                 'BEGIN:VCARD',
                 'VERSION:3.0',
                 'FN:' + CONTACTO.nombre,
-                'ORG:' + CONTACTO.empresa,
+                'ORG:' + CLIENTE.empresa,
                 'EMAIL:' + CONTACTO.correo,
                 'TEL:' + CONTACTO.telefono,
                 'END:VCARD'
@@ -1054,13 +1107,23 @@
             const url = window.URL.createObjectURL(blob);
             const enlace = document.createElement('a');
             enlace.setAttribute('href', url);
-            enlace.setAttribute('download', CONTACTO.archivo);
+            enlace.setAttribute('download', CONTACTO.archivoVcard);
             document.body.appendChild(enlace);
             enlace.click();
             document.body.removeChild(enlace);
             window.URL.revokeObjectURL(url);
         });
 
+        function aplicarCliente() {
+            document.title = CLIENTE.titulo;
+            document.documentElement.style.setProperty('--fondo', CLIENTE.fondo);
+            document.documentElement.style.setProperty('--accent', CLIENTE.acento);
+            document.getElementById('botonWhatsapp').href =
+                'https://wa.me/' + CONTACTO.whatsapp +
+                '?text=' + encodeURIComponent(CONTACTO.mensajeWhatsapp);
+        }
+
+        aplicarCliente();
         renderPestanas();
         renderCuenta();
     </script>

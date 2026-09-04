@@ -1,0 +1,46 @@
+---
+description: Convenciones de la página de cobro para llaveros NFC
+alwaysApply: true
+---
+
+Este repositorio es una página de cobro para un llavero NFC: un solo archivo
+`index.html`, sin dependencias ni compilación, publicado con GitHub Pages.
+
+## Regla principal
+
+Los datos del cliente viven únicamente en el bloque `DATOS DEL CLIENTE`, al
+inicio del `<script>`, formado por `CLIENTE`, `CONTACTO` y `CUENTAS`.
+
+Para adaptar la página a un cliente nuevo o cambiar sus datos, editar solo ese
+bloque. No escribir datos del cliente en el HTML de la tarjeta ni en el CSS: el
+script los inyecta al cargar y los marcadores `—` del HTML deben quedarse así.
+
+Si un cambio parece exigir tocar el código de abajo, es señal de que falta una
+opción en la configuración. Agregarla ahí en lugar de escribir el valor a mano.
+
+## Datos bancarios
+
+Nunca inventar ni completar con valores de relleno un número de cuenta, un RUT,
+un correo de confirmación o un teléfono. Si falta un dato, pedirlo. Un número
+falso pero verosímil en esta página es plata que se transfiere a la cuenta
+equivocada.
+
+## Bancos
+
+Los bancos se agregan al catálogo `BANCOS`, con `nombre`, `sigla` y `color`.
+El logo es opcional: sin él, la pestaña muestra la sigla y el nombre.
+
+Los logos se incrustan como `<symbol>` en el sprite del inicio del `<body>`,
+tomados del sitio oficial del banco y en su versión para fondo oscuro. No
+enlazar imágenes externas: la página se usa en la calle y con mala señal.
+
+## Estilo del código
+
+El código y los comentarios están en español, con nombres de variables en
+español. Los comentarios explican por qué algo está hecho de cierta forma
+(restricciones de los formularios bancarios, navegadores que bloquean el
+portapapeles), no lo que hace la línea siguiente.
+
+Al terminar un cambio, verificarlo en un navegador de verdad: cambiar de
+pestaña, copiar todos los datos, recorrer el modo paso a paso y revisar que no
+haya errores de consola.
