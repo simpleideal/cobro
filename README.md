@@ -40,16 +40,25 @@ plantilla para que el próximo llavero tampoco lo necesite.
 | `razonSocial` | Nombre legal completo, tal como está en el SII. |
 | `nombreCorto` | Versión corta para el formulario del banco. |
 | `rut` | Se escribe una sola vez, con puntos y guion. |
-| `fondo` | Imagen de fondo, entre `url('...')`. |
+| `fondo` | Fondo de la página: una imagen entre `url('...')`, o un color o degradado. |
 | `acento` | Color de los botones. |
 
 Sobre `nombreCorto`: los campos de nombre de los bancos cortan alrededor de 30
 caracteres, así que una razón social larga llega mutilada al destinatario. Esa
 es la versión que se copia al formulario.
 
-Sobre `fondo`: conviene una foto oscura del rubro del cliente. Sirve cualquier
-URL pública; las de Unsplash funcionan bien. La página le aplica encima una capa
-negra al 80% para que el texto se lea.
+Sobre `fondo`: lo habitual es una foto oscura del rubro del cliente. Sirve
+cualquier URL pública; las de Unsplash funcionan bien. La página le aplica encima
+una capa negra al 80% para que el texto se lea.
+
+También acepta un color o un degradado, y ahí no aplica esa capa: si el color se
+eligió a mano, oscurecerlo sería pelear contra la decisión. Conviene cuando la
+marca tiene su propia paleta y una foto la ensuciaría, y de paso la página deja de
+depender de una imagen externa. Por ejemplo:
+
+```js
+fondo: 'radial-gradient(circle at 50% 0%, #3a1526 0%, #0b0b0b 62%)',
+```
 
 Sobre `acento`: tiene que contrastar contra texto oscuro, porque las letras de
 los botones son casi negras. Los tonos claros funcionan; los muy saturados no.
@@ -96,7 +105,8 @@ los suyos y las demás heredan los de `CLIENTE`.
 ## Agregar un banco al catálogo
 
 El catálogo `BANCOS` está justo debajo de los datos del cliente y se comparte
-entre todos los llaveros. Hoy tiene BCI y Banco de Chile con su logo.
+entre todos los llaveros. Hoy tiene BCI y Banco de Chile con su logo, y Santander
+y BancoEstado con la sigla, porque sus sitios no dejan bajar el SVG oficial.
 
 Para un banco que no esté, la versión mínima es:
 
