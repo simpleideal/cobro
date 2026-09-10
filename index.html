@@ -306,6 +306,15 @@
             text-align: center;
         }
 
+        /* Lo lee quien paga (el tercero), no el cliente que recibe el WhatsApp. */
+        .aviso-voucher {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            line-height: 1.45;
+            margin-top: 12px;
+            text-align: center;
+        }
+
         .whatsapp-float {
             position: fixed;
             bottom: calc(24px + env(safe-area-inset-bottom, 0px));
@@ -579,6 +588,10 @@
             Antes de confirmar, revisa que el banco y el número de cuenta hayan
             quedado bien.
         </p>
+        <p class="aviso-voucher">
+            📌 <strong>Importante:</strong> sube tu voucher por WhatsApp
+            o muéstraselo a quien te está cobrando.
+        </p>
     </div>
 
     <a id="botonWhatsapp" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
@@ -653,7 +666,7 @@
             correo: 'LPCONSTRUCTORA0@GMAIL.COM',
             // Solo dígitos con código de país, sin + ni espacios.
             whatsapp: '56995663306',
-            mensajeWhatsapp: 'Hola Luis. 📌 Importante: sube tu voucher.',
+            mensajeWhatsapp: 'Hola Luis, te aviso que haré la transferencia.',
             archivoVcard: 'Luis_Paillaleve_Constructora_LP.vcf'
         };
 
