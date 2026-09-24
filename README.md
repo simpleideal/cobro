@@ -208,7 +208,6 @@ Las apps lo parten por esa etiqueta, no por el orden de los renglones:
 
 ```
 Nombre: ...
-Nombre y Apellido: ...
 RUT: ...
 Banco: ...
 Tipo de cuenta: ...
@@ -216,17 +215,18 @@ Número de cuenta: ...
 Correo: ...
 ```
 
-`Nombre:` va escrito así, sin abreviar. Sin esa etiqueta el titular queda
-vacío en varios bancos. `Número de cuenta` tampoco se abrevia: Banco
-Falabella ignora `N° de cuenta` y sí reconoce la frase completa.
+El orden y la cantidad de líneas importan. Varias apps no leen la etiqueta:
+toman la primera línea como nombre, la segunda como RUT y la tercera como
+banco. Una línea de más corre todo lo que sigue. Por eso el nombre va una
+sola vez, con la etiqueta `Nombre:`, igual que en la plantilla que ya pega
+bien. `Número de cuenta` no se abrevia: Banco Falabella ignora `N° de cuenta`.
 
 ### Banco de Chile y el nombre
 
-Banco de Chile exige el nombre para poder continuar. El campo de la app se
-llama «Nombre y Apellido» y no lee la línea `Nombre:`. Por eso el pegado
-repite el mismo nombre con la etiqueta `Nombre y Apellido:`. `Nombre:` queda
-primero: un banco que solo busca la palabra "nombre" no debe llevarse
-"y Apellido" como si fuera parte del titular.
+En el aviso «¿Deseas pegar los datos?» el nombre sale como `Nombre:`. El
+formulario después lo muestra como «Nombre y Apellido», pero el detector no
+busca esa frase. Si el texto trae una segunda línea de nombre, el RUT y el
+banco dejan de caer en su lugar en las apps que leen por posición.
 
 ### Cuenta RUT de BancoEstado
 
