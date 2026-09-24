@@ -208,6 +208,7 @@ Las apps lo parten por esa etiqueta, no por el orden de los renglones:
 
 ```
 Nombre: ...
+Nombre destinatario: ...
 RUT: ...
 Banco: ...
 Tipo de cuenta: ...
@@ -219,13 +220,12 @@ Correo: ...
 vacío en varios bancos. `Número de cuenta` tampoco se abrevia: Banco
 Falabella ignora `N° de cuenta` y sí reconoce la frase completa.
 
-### Banco de Chile no pega el nombre
+### Banco de Chile y el nombre
 
-En Banco de Chile el pegado llena el RUT, el banco, el tipo, el número y el
-correo, y deja el nombre en blanco. La línea `Nombre:` sí va en el texto. Esa
-app no la usa en ese paso: completa el nombre al validar la cuenta con el RUT
-y el número, cuando se sigue adelante. Si después de esa validación el nombre
-sigue vacío, ahí se copia con el botón del campo.
+Banco de Chile exige el nombre para poder continuar. No lee la línea
+`Nombre:`. La etiqueta que asocia a ese campo es `Nombre destinatario:`, con
+el mismo nombre. `Nombre:` queda primero: un banco que solo busca la palabra
+"nombre" no debe llevarse "destinatario" como si fuera parte del titular.
 
 ### Cuenta RUT de BancoEstado
 

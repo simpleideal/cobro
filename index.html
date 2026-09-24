@@ -783,10 +783,15 @@
         // así que cada línea va rotulada y sin abreviar: sin "Nombre:" el titular
         // queda sin identificar, y Banco Falabella ignora "N° de cuenta" pero sí
         // reconoce "Número de cuenta".
+        // Banco de Chile no lee "Nombre:". Sin el nombre no deja seguir, y la
+        // etiqueta que sí asocia es "Nombre destinatario:". "Nombre:" va primero
+        // para que un banco que solo busca esa palabra no se quede con
+        // "destinatario" como si fuera parte del nombre.
         function textoCompleto() {
             const cuenta = cuentaActiva();
             return [
                 'Nombre: ' + cuenta.nombreCorto,
+                'Nombre destinatario: ' + cuenta.nombreCorto,
                 'RUT: ' + formatosRut(cuenta.rut)[formatoRut],
                 'Banco: ' + cuenta.banco,
                 'Tipo de cuenta: ' + cuenta.tipoCuenta,
