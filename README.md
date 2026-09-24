@@ -208,7 +208,7 @@ Las apps lo parten por esa etiqueta, no por el orden de los renglones:
 
 ```
 Nombre: ...
-Nombre destinatario: ...
+Nombre y Apellido: ...
 RUT: ...
 Banco: ...
 Tipo de cuenta: ...
@@ -222,10 +222,11 @@ Falabella ignora `N° de cuenta` y sí reconoce la frase completa.
 
 ### Banco de Chile y el nombre
 
-Banco de Chile exige el nombre para poder continuar. No lee la línea
-`Nombre:`. La etiqueta que asocia a ese campo es `Nombre destinatario:`, con
-el mismo nombre. `Nombre:` queda primero: un banco que solo busca la palabra
-"nombre" no debe llevarse "destinatario" como si fuera parte del titular.
+Banco de Chile exige el nombre para poder continuar. El campo de la app se
+llama «Nombre y Apellido» y no lee la línea `Nombre:`. Por eso el pegado
+repite el mismo nombre con la etiqueta `Nombre y Apellido:`. `Nombre:` queda
+primero: un banco que solo busca la palabra "nombre" no debe llevarse
+"y Apellido" como si fuera parte del titular.
 
 ### Cuenta RUT de BancoEstado
 
