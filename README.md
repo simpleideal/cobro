@@ -201,6 +201,51 @@ raíz. La URL queda como `https://simpleideal.github.io/nombre-del-repo/`.
 Los cambios tardan un par de minutos en aparecer. Si la página se ve vieja,
 suele ser caché del navegador: recargar con Ctrl+Shift+R.
 
+## Pegar todos los datos
+
+El botón «Copiar todos los datos» arma un texto con una etiqueta por línea.
+Las apps lo parten por esa etiqueta, no por el orden de los renglones:
+
+```
+Nombre: ...
+RUT: ...
+Banco: ...
+Tipo de cuenta: ...
+Número de cuenta: ...
+Correo: ...
+```
+
+El orden y la cantidad de líneas importan. Varias apps no leen la etiqueta:
+toman la primera línea como nombre, la segunda como RUT y la tercera como
+banco. Una línea de más corre todo lo que sigue. Por eso el nombre va una
+sola vez, con la etiqueta `Nombre:`, igual que en la plantilla que ya pega
+bien. `Número de cuenta` no se abrevia: Banco Falabella ignora `N° de cuenta`.
+
+### Banco de Chile y el nombre
+
+En el aviso «¿Deseas pegar los datos?» el nombre sale como `Nombre:`. El
+formulario después lo muestra como «Nombre y Apellido», pero el detector no
+busca esa frase. Si el texto trae una segunda línea de nombre, el RUT y el
+banco dejan de caer en su lugar en las apps que leen por posición.
+
+### Cuenta RUT de BancoEstado
+
+La Cuenta RUT es una cuenta vista. El número que se pega es el RUT sin
+puntos, sin guion y sin dígito verificador. El RUT completo, con el dígito,
+va solo en la línea `RUT:`.
+
+El tipo no se llama igual en todas las apps:
+
+- En BancoEstado aparece como Cuenta RUT.
+- En otros bancos aparece como Cuenta Vista, o como una sola opción
+  Cuenta RUT/Vista.
+
+Dale Coopeuch no tiene una opción llamada exactamente `Cuenta RUT`. El pegado
+compara `Tipo de cuenta: Cuenta RUT` con la lista del formulario y, al no
+encontrar esa frase, deja el tipo sin elegir. El resto de los campos sí
+entra. Hay que elegir a mano Cuenta Vista o Cuenta RUT/Vista: es la misma
+cuenta y el número no cambia.
+
 ## Antes de entregar el llavero
 
 - Abrir la página en un teléfono, no solo en el computador.
