@@ -201,6 +201,50 @@ raíz. La URL queda como `https://simpleideal.github.io/nombre-del-repo/`.
 Los cambios tardan un par de minutos en aparecer. Si la página se ve vieja,
 suele ser caché del navegador: recargar con Ctrl+Shift+R.
 
+## Pegar todos los datos
+
+El botón «Copiar todos los datos» arma un texto con una etiqueta por línea.
+Las apps lo parten por esa etiqueta, no por el orden de los renglones:
+
+```
+Nombre: ...
+RUT: ...
+Banco: ...
+Tipo de cuenta: ...
+Número de cuenta: ...
+Correo: ...
+```
+
+`Nombre:` va escrito así, sin abreviar. Sin esa etiqueta el titular queda
+vacío en varios bancos. `Número de cuenta` tampoco se abrevia: Banco
+Falabella ignora `N° de cuenta` y sí reconoce la frase completa.
+
+### Banco de Chile no pega el nombre
+
+En Banco de Chile el pegado llena el RUT, el banco, el tipo, el número y el
+correo, y deja el nombre en blanco. La línea `Nombre:` sí va en el texto. Esa
+app no la usa en ese paso: completa el nombre al validar la cuenta con el RUT
+y el número, cuando se sigue adelante. Si después de esa validación el nombre
+sigue vacío, ahí se copia con el botón del campo.
+
+### Cuenta RUT de BancoEstado
+
+La Cuenta RUT es una cuenta vista. El número que se pega es el RUT sin
+puntos, sin guion y sin dígito verificador. El RUT completo, con el dígito,
+va solo en la línea `RUT:`.
+
+El tipo no se llama igual en todas las apps:
+
+- En BancoEstado aparece como Cuenta RUT.
+- En otros bancos aparece como Cuenta Vista, o como una sola opción
+  Cuenta RUT/Vista.
+
+Dale Coopeuch no tiene una opción llamada exactamente `Cuenta RUT`. El pegado
+compara `Tipo de cuenta: Cuenta RUT` con la lista del formulario y, al no
+encontrar esa frase, deja el tipo sin elegir. El resto de los campos sí
+entra. Hay que elegir a mano Cuenta Vista o Cuenta RUT/Vista: es la misma
+cuenta y el número no cambia.
+
 ## Antes de entregar el llavero
 
 - Abrir la página en un teléfono, no solo en el computador.
