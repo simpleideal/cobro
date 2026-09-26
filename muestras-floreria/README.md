@@ -2,10 +2,10 @@
 
 Paquete de muestras para mostrar al cliente / imprenta antes de producir.
 
-## Conjuntos (pieza única, estilo osos/abuelita)
+## Conjuntos sticker (para plotter)
 
-Un solo topper unido: personaje + canasta + badge + “De: ____”.  
-No son pliegos de stickers sueltos.
+Estilo **sticker 2D** (no render 3D): borde blanco + línea punteada de corte.  
+Estructura tipo osos/abuelita: personaje + canasta + badge + “De: ____”.
 
 | Archivo | Motivo |
 |---|---|
